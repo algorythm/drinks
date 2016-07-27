@@ -11,6 +11,19 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function() {
     return view('welcome');
 });
+
+Route::get('/profile/{username}', function($username) {
+  $username = App\User::where('firstname', $username)->firstOrFail();
+  return view('profile.view_profile')->with('username', $username);
+});
+
+Route::get('/profile', function() {
+  return view('profile.profile');
+});
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
